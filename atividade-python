@@ -1,0 +1,65 @@
+Questão 1: Idade em Anos, Meses e Dias
+Considerando o padrão de 1 ano = 365 dias e 1 mês = 30 dias:
+
+Python
+def converter_idade(dias_totais):
+    anos = dias_totais // 365
+    resto_dias = dias_totais % 365
+    meses = resto_dias // 30
+    dias = resto_dias % 30
+    return anos, meses, dias
+
+dias_input = int(input("Digite a idade em dias: "))
+anos, meses, dias = converter_idade(dias_input)
+print(f"{anos} ano(s), {meses} mês(es) e {dias} dia(s).")
+Questão 2: Verificação e Área do Triângulo
+Usa a desigualdade triangular e a Fórmula de Heron para o cálculo da área:
+
+Python
+import math
+
+a = int(input("Digite o valor de a: "))
+b = int(input("Digite o valor de b: "))
+c = int(input("Digite o valor de c: "))
+
+# Verifica a condição de existência do triângulo
+if (a < b + c) and (b < a + c) and (c < a + b):
+    # Semiperímetro
+    s = (a + b + c) / 2
+    # Fórmula de Heron para área
+    area = math.sqrt(s * (s - a) * (s - b) * (s - c))
+    print(f"Os valores formam um triângulo. Área: {area:.2f}")
+else:
+    print(f"Os valores não formam um triângulo. Valores lidos: a={a}, b={b}, c={c}")
+Questão 3: Menor de Três Números
+Python
+num1 = int(input("Digite o primeiro número: "))
+num2 = int(input("Digite o segundo número: "))
+num3 = int(input("Digite o terceiro número: "))
+
+menor = min(num1, num2, num3)
+print(f"O menor número é: {menor}")
+Questão 4: Verificador de Número Primo (1 a 100)
+Python
+def eh_primo(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+# Testando de 1 a 100
+for numero in range(1, 101):
+    status = "é primo" if eh_primo(numero) else "não é primo"
+    print(f"{numero}: {status}")
+Questão 5: Inverter Letras de Cada Palavra
+Python
+def inverter_palavras(frase):
+    palavras = frase.split()
+    palavras_invertidas = [palavra[::-1] for palavra in palavras]
+    return " ".join(palavras_invertidas)
+
+texto = input("Digite uma frase: ")
+resultado = inverter_palavras(texto)
+print(f"Frase com palavras invertidas: {resultado}")
