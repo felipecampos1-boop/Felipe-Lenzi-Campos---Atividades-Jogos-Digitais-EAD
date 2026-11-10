@@ -1,0 +1,132 @@
+Python
+import tkinter as tk
+from tkinter import messagebox
+
+
+def calcular_imc():
+    try:
+        # Obtém os valores digitados e converte para float
+        peso = float(entry_peso.get().replace(",", "."))
+        altura = float(entry_altura.get().replace(",", "."))
+
+        if peso <= 0 or altura <= 0:
+            messagebox.showerror(
+                "Erro", "Peso e altura devem ser valores maiores que zero!"
+            )
+            return
+
+        # Cálculo do IMC: Peso / (Altura * Altura)
+        imc = peso / (altura**2)
+
+        # Classificação segundo a Tabela Oficial (OMS / Wikipedia)
+        if imc < 18.5:
+            classificacao = "Abaixo do peso"
+        elif 18.5 <= imc < 25.0:
+            classificacao = "Peso normal"
+        elif 25.0 <= imc < 30.0:
+            classificacao = "Sobrepeso"
+        elif 30.0 <= imc < 35.0:
+            classificacao = "Obesidade Grau I"
+        elif 35.0 <= imc < 40.0:
+            classificacao = "Obesidade Grau II (severa)"
+        else:
+            classificacao = "Obesidade Grau III (mórbida)"
+
+        # Exibe o resultado na tela
+        lbl_resultado.config(
+            text=f"IMC: {imc:.2f}\nClassificação: {classificacao}",
+            fg="#2c3e50",
+        )
+
+    except ValueError:
+        messagebox.showerror(
+            "Erro de Entrada", "Por favor, insira números válidos para peso e altura!"
+        )
+
+
+def limpar_campos():
+    entry_peso.delete(0, tk.END)
+    entry_altura.delete(0, tk.END)
+    lbl_resultado.config(text="")
+
+
+# --- Configuração da Janela Principal ---
+janela = tk.Tk()
+janela.title("Calculadora de IMC")
+janela.geometry("360x380")
+janela.config(bg="#f4f6f7")
+janela.resizable(False, False)
+
+# --- Componentes da Interface ---
+# Título
+lbl_titulo = tk.Label(
+    janela,
+    text="Cálculo do IMC",
+    font=("Helvetica", 16, "bold"),
+    bg="#f4f6f7",
+    fg="#34495e",
+)
+lbl_titulo.pack(pady=15)
+
+# Campo Peso
+lbl_peso = tk.Label(
+    janela,
+    text="Peso (kg):",
+    font=("Helvetica", 10, "bold"),
+    bg="#f4f6f7",
+    fg="#2c3e50",
+)
+lbl_peso.pack(anchor="w", padx=40)
+entry_peso = tk.Entry(janela, font=("Helvetica", 11), width=25)
+entry_peso.pack(pady=5)
+
+# Campo Altura
+lbl_altura = tk.Label(
+    janela,
+    text="Altura (m - ex: 1.75):",
+    font=("Helvetica", 10, "bold"),
+    bg="#f4f6f7",
+    fg="#2c3e50",
+)
+lbl_altura.pack(anchor="w", padx=40, pady=(10, 0))
+entry_altura = tk.Entry(janela, font=("Helvetica", 11), width=25)
+entry_altura.pack(pady=5)
+
+# Botões (Calcular e Limpar)
+frame_botoes = tk.Frame(janela, bg="#f4f6f7")
+frame_botoes.pack(pady=15)
+
+btn_calcular = tk.Button(
+    frame_botoes,
+    text="Calcular IMC",
+    font=("Helvetica", 10, "bold"),
+    bg="#27ae60",
+    fg="white",
+    padx=10,
+    pady=5,
+    relief="flat",
+    command=calcular_imc,
+)
+btn_calcular.grid(row=0, column=0, padx=5)
+
+btn_limpar = tk.Button(
+    frame_botoes,
+    text="Limpar",
+    font=("Helvetica", 10, "bold"),
+    bg="#e74c3c",
+    fg="white",
+    padx=10,
+    pady=5,
+    relief="flat",
+    command=limpar_campos,
+)
+btn_limpar.grid(row=0, column=1, padx=5)
+
+# Label para Exibir o Resultado
+lbl_resultado = tk.Label(
+    janela, text="", font=("Helvetica", 11, "bold"), bg="#f4f6f7", justify="center"
+)
+lbl_resultado.pack(pady=15)
+
+# Executa a aplicação
+janela.mainloop()
